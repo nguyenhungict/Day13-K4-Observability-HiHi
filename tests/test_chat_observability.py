@@ -30,3 +30,21 @@ def test_chat_response_log_exposes_quality_for_dashboard(
     events = [json.loads(line) for line in log_path.read_text(encoding="utf-8").splitlines()]
     response_event = next(event for event in events if event["event"] == "response_sent")
     assert response_event["quality_score"] == response.json()["quality_score"]
+
+
+def test_exception_traceback_is_scrubbed_before_write(monkeypatch, tmp_path: Path) -> None:
+    log_path = tmp_path / "logs.jsonl"
+    monkeypatch.setattr(logging_config, "LOG_PATH", log_path)
+    logging_config.configure_logging()
+    log = logging_config.get_logger()
+
+    try:
+        raise ValueError("contact student@vinuni.edu.vn or 0901234567")
+    except ValueError:
+        log.error("request_failed", service="api", exc_info=True)
+
+    written = log_path.read_text(encoding="utf-8")
+    assert "student@vinuni.edu.vn" not in written
+    assert "0901234567" not in written
+    assert "REDACTED_EMAIL" in written
+    assert "REDACTED_PHONE_VN" in written
