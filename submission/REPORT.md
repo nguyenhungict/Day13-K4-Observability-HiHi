@@ -4,7 +4,7 @@
 
 - Tên nhóm: Day13-K4-Observability-HiHi
 - Repository URL: https://github.com/nguyenhungict/Day13-K4-Observability-HiHi
-- Commit SHA cuối: _Cập nhật bằng `git rev-parse HEAD` sau commit nộp bài cuối._
+- Commit SHA nộp bài: `84329b29a1bf2baa4fc36c2a035de4ad255713ea`
 - Thành viên và vai trò:
 
 | Thành viên | MSSV | Vai trò |
