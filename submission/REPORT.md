@@ -7,6 +7,14 @@
 - Commit SHA cuối:
 - Thành viên và vai trò:
 
+| Thành viên | MSSV | Vai trò |
+|---|---|---|
+| Nguyễn Duy Hưng | 2A202601702 | Logging & Correlation ID |
+| Nguyễn Hoàng Thảo Tiên | 2A202601650 | PII Redaction & Request Metadata |
+| Đoàn Duy Chiến | 2A202601366 | Langfuse Tracing & Prompt Versioning |
+| Trần Bảo Phúc | 2A202601148 | Dashboard, SLO & Alerts |
+| Nguyễn Xuân Kiên | 2A202601398 | Incident Investigation, Report & Demo |
+
 ## 2. Kết quả kỹ thuật
 
 - Điểm `validate_logs.py`:
@@ -52,4 +60,8 @@ Với mỗi thành viên, ghi rõ nhiệm vụ và link commit/PR tương ứng.
 
 | Thành viên | Phần việc | Commit/PR | Điều đã học |
 |---|---|---|---|
-| | | | |
+| Nguyễn Duy Hưng | Correlation ID, contextvars và response headers | `hung` / _điền commit SHA_ | Correlation ID giúp nối log của cùng một request. |
+| Nguyễn Hoàng Thảo Tiên | PII redaction và request metadata | `tien` / _điền commit SHA_ | PII phải được che trước khi JSON log được render. |
+| Đoàn Duy Chiến | Langfuse trace, prompt version và rollback | `chien` / _điền commit SHA_ | Trace phải ghi label/version thật của prompt đã dùng. |
+| Trần Bảo Phúc | Dashboard, SLO, alert và runbook | `phuc` / _điền commit SHA_ | P95, error rate và quality proxy phải có threshold rõ ràng. |
+| Nguyễn Xuân Kiên | Incident, evidence, report và demo | `kien` / _điền commit SHA_ | Kết luận incident cần khớp metrics, trace và log. |
