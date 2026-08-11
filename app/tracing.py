@@ -4,7 +4,7 @@ import os
 from typing import Any
 
 try:
-    from langfuse import get_client, observe
+    from langfuse import Langfuse, observe
 
     LANGFUSE_SDK_AVAILABLE = True
 except ImportError:  # pragma: no cover - chỉ dùng khi chưa cài requirements
@@ -28,6 +28,13 @@ except ImportError:  # pragma: no cover - chỉ dùng khi chưa cài requirement
 
 
 def get_langfuse_client():
+    # Cloud v4 ingests older Python SDK telemetry asynchronously unless this
+    # OTLP header is present. Langfuse v3 supports additional exporter headers,
+    # so retain the lab's pinned SDK while requesting real-time ingestion.
+    if LANGFUSE_SDK_AVAILABLE:
+        return Langfuse(
+            additional_headers={"x-langfuse-ingestion-version": "4"}
+        )
     return get_client()
 
 

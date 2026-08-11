@@ -13,7 +13,7 @@ from .metrics import record_error, snapshot
 from .middleware import CorrelationIdMiddleware
 from .pii import hash_user_id, summarize_text
 from .schemas import ChatRequest, ChatResponse
-from .tracing import tracing_enabled
+from .tracing import get_langfuse_client, tracing_enabled
 
 configure_logging()
 log = get_logger()
@@ -24,12 +24,24 @@ agent = LabAgent()
 
 @app.on_event("startup")
 async def startup() -> None:
+    # Initialize the configured client before the first @observe call so the
+    # exporter receives the Cloud v4 ingestion header.
+    if tracing_enabled():
+        get_langfuse_client()
     log.info(
         "app_started",
         service=os.getenv("APP_NAME", "day13-observability-lab"),
         env=os.getenv("APP_ENV", "dev"),
         payload={"tracing_enabled": tracing_enabled()},
     )
+
+
+@app.on_event("shutdown")
+async def shutdown() -> None:
+    """Flush pending telemetry before a local server or worker exits."""
+    flush = getattr(get_langfuse_client(), "flush", None)
+    if callable(flush):
+        flush()
 
 
 @app.get("/health")
