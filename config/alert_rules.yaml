@@ -1,19 +1,19 @@
 alerts:
-  - name: TODO_alert_1
-    severity: TODO
-    condition: TODO
+  - name: AI API latency SLO breach
+    severity: high
+    condition: p95(response_sent.latency_ms) > 3000 ms for 5 minutes
     type: symptom-based
-    owner: TODO
+    owner: Trần Bảo Phúc
     runbook: docs/alerts.md#alert-1
-  - name: TODO_alert_2
-    severity: TODO
-    condition: TODO
+  - name: AI API error-rate SLO breach
+    severity: critical
+    condition: request_failed / request_received * 100 > 2% for 5 minutes
     type: symptom-based
-    owner: TODO
+    owner: Trần Bảo Phúc
     runbook: docs/alerts.md#alert-2
-  - name: TODO_alert_3
-    severity: TODO
-    condition: TODO
+  - name: AI answer quality degradation
+    severity: medium
+    condition: mean(response_sent.quality_score) < 0.75 for 15 minutes
     type: symptom-based
-    owner: TODO
+    owner: Trần Bảo Phúc
     runbook: docs/alerts.md#alert-3
